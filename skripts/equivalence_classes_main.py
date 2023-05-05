@@ -8,17 +8,12 @@ symbol_block_length = 3
 ############################################################################
 
 eq_classes_calc = equiv_classes_calculator.Equivalence_classes_calculator(constellation,symbol_block_length)
-eq_classes_calc.calculate_equivalence_classes()
 
+for i in range (3,6):
+    eq_classes_calc.symbol_block_length = i
+    eq_classes_calc.calculate_equivalence_classes()
+    eq_classes_calc.summarize_results()
 
-class_size_cnt = np.zeros(7)
-
-for key, value in eq_classes_calc.equivalence_classes.items():
-    class_size = len(value)//symbol_block_length
-    class_size_cnt[int(np.log2(class_size)-2)] += 1
-    
-print(class_size_cnt)
-print(len(eq_classes_calc.equivalence_classes.keys()))
 
 
 
