@@ -23,10 +23,9 @@ class Equivalence_classes_calculator:
         for n in range(len(self.constellation)**self.symbol_block_length):
             symbol_block = self.generate_symbol_block(n)
             int_damp_out = self.integrate_and_dump_no_noise(symbol_block)
-            eqv_class = self.equivalence_classes.get(int_damp_out,np.array([]))
-            self.equivalence_classes[int_damp_out] = np.append(eqv_class,symbol_block)
-        self.organize_equiv_classes_dictionary()
-
+            eqv_class = self.equivalence_classes.get(int_damp_out,np.empty((0,self.symbol_block_length)))
+            self.equivalence_classes[int_damp_out] = np.append(eqv_class, [symbol_block], axis=0)
+        
     def generate_symbol_block(self,n):
         indices = self.numberToBaseN(n)
         return np.choose(indices,self.constellation)
@@ -45,14 +44,6 @@ class Equivalence_classes_calculator:
         ISI_free = np.abs(symbol_block)**2
         ISI_present = 1/4*np.abs(symbol_block[:-1]+symbol_block[1:])**2+1/8*np.abs(symbol_block[:-1]-symbol_block[1:])**2    
         return tuple(np.append(ISI_free , ISI_present))
-
-    ################# formating results from vector to a matrix    
-
-    def organize_equiv_classes_dictionary(self):
-        # convert the entries of the dictionary from vectors to matrix
-        # each row is a symbol_block in the same equivalence class
-        for key, value in self.equivalence_classes.items():
-            self.equivalence_classes[key] = np.reshape(value,(len(value)//self.symbol_block_length,self.symbol_block_length))
 
     ################# saving and printing results functions
     
