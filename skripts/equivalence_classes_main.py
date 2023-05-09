@@ -29,5 +29,5 @@ eq_class_analyzer = equiv_class_analyzator.Equiv_class_analyzator("results/2-Rin
 # plt.show()
 
 plt.figure(0, figsize=(8,8))
-eq_class_analyzer.plot_constellation(const_mk.n_ring_m_ary_phase(range(1,11),10))
+eq_class_analyzer.plot_constellation(const_mk.n_QAM(64))
 plt.show()
