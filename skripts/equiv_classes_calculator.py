@@ -43,19 +43,20 @@ class Equivalence_classes_calculator:
     def integrate_and_dump_no_noise(self,symbol_block):
         ISI_free = np.abs(symbol_block)**2
         ISI_present = 1/4*np.abs(symbol_block[:-1]+symbol_block[1:])**2+1/8*np.abs(symbol_block[:-1]-symbol_block[1:])**2    
-        return tuple(np.append(ISI_free , ISI_present))
+        return tuple(np.around(np.append(ISI_free , ISI_present),5))
 
     ################# saving and printing results functions
     
-    def save_results(self,path):
+    def save_results(self, path, calc_tiem):
         file_name = "EqClasses_" + self.constellation_name + "_n" + str(self.symbol_block_length) + ".npy"
         np.save(path+file_name,self.equivalence_classes)
         file_name = "Summary_EqClasses_" + self.constellation_name + "_n" + str(self.symbol_block_length) + ".txt"
         file = open(path+file_name,"w")
         self.print_info(file.write)
+        file.write("--- %s seconds ---\n" % (calc_tiem))
         file.close()
 
-    def print_info(self, print_target = print):
+    def print_info(self, print_target=print):
         print_target("For the constellation "+ self.constellation_name + " with points:\n")
         print_target(np.array2string(self.constellation, precision = 4, separator = "\n",
                                      prefix="",suffix="\n"))
