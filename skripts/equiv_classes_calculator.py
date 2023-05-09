@@ -28,7 +28,7 @@ class Equivalence_classes_calculator:
         
     def generate_symbol_block(self,n):
         indices = self.numberToBaseN(n)
-        return np.choose(indices,self.constellation)
+        return self.constellation[indices]
 
     def numberToBaseN(self, n):
         b = len(self.constellation)
@@ -47,13 +47,13 @@ class Equivalence_classes_calculator:
 
     ################# saving and printing results functions
     
-    def save_results(self, path, calc_tiem):
+    def save_results(self, path, calc_time):
         file_name = "EqClasses_" + self.constellation_name + "_n" + str(self.symbol_block_length) + ".npy"
         np.save(path+file_name,self.equivalence_classes)
         file_name = "Summary_EqClasses_" + self.constellation_name + "_n" + str(self.symbol_block_length) + ".txt"
         file = open(path+file_name,"w")
         self.print_info(file.write)
-        file.write("--- %s seconds ---\n" % (calc_tiem))
+        file.write("--- %s seconds ---\n" % (calc_time))
         file.close()
 
     def print_info(self, print_target=print):
