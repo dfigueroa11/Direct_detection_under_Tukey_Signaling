@@ -1,9 +1,9 @@
 import numpy as np
 
 
+
 def n_roots_of_unity(n):
     return np.exp(2j*np.pi*np.arange(n)/n)
-
 
 def nr_np_SQAM(radius_set, number_phase):
     constellation_base = n_roots_of_unity(number_phase)
@@ -19,8 +19,8 @@ def n_ring_m_ary_phase(radius_set,m_ary):
 def n_QAM(M):
     constellation = np.zeros(M, dtype=complex)
     if int( np.sqrt( M ) ) == np.sqrt( M ):
-        k = int( np.log2( M ) )  
-        for m in range(0,M):   
+        k = int( np.log2( M ) )
+        for m in range(0,M):
             b_bin = np.binary_repr( m, width=k)
             b = [ (-1)**( int(x) ) for x in b_bin]
             d = np.sqrt( M ) / 2
@@ -31,10 +31,10 @@ def n_QAM(M):
                 dx *= b[ 2*n ]
                 dy *= b[ 2*n + 1 ]
                 s += d * ( dx + 1j * dy )
-                d = d/2;       
+                d = d/2;
             constellation[ m ] = s
     elif int(np.sqrt(2*M)) == np.sqrt(2*M):
         const_temp = n_QAM( 2*M )
         constellation = [c for c in const_temp if np.imag(c)<0]
-        constellation -= np.average( constellation )           
+        constellation -= np.average( constellation )
     return constellation
