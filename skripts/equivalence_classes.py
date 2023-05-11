@@ -10,7 +10,7 @@ import constellation_maker as const_mk
 def calculate_equiv_classes(constellation, sym_block_len_start, sym_block_len_end, constellation_name):
     results_folder = "results/"+constellation_name+"/"
     eq_classes_calc = eq_cls_calc.Equivalence_classes_calculator(constellation,constellation_name)
-    for sym_block_len in range (sym_block_len_start,sym_block_len_end+1):
+    for sym_block_len in range(sym_block_len_start,sym_block_len_end+1):
         eq_classes_calc.symbol_block_length = sym_block_len
         start_time = time.time()
         eq_classes_calc.calculate_equivalence_classes()
@@ -45,7 +45,7 @@ def calculate_equiv_classes(constellation, sym_block_len_start, sym_block_len_en
 # ###########################################################################
 # const_name = "8-Ring_8-Ary"
 # const = const_mk.n_ring_m_ary_phase([1,2,3,4,5,6,7,8],8)
-# calculate_equiv_classes(const, 3, 4, const_name)
+# calculate_equiv_classes(const, 3, 3, const_name)
 # ###########################################################################
 
 # ###########################################################################

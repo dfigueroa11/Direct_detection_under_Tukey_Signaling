@@ -22,21 +22,21 @@ class Equivalence_classes_calculator:
         self.equivalence_classes = {}
         for n in range(len(self.constellation)**self.symbol_block_length):
             symbol_block = self.generate_symbol_block(n)
-            int_damp_out = self.integrate_and_dump_no_noise(symbol_block)
-            eqv_class = self.equivalence_classes.get(int_damp_out,np.empty((0,self.symbol_block_length)))
-            self.equivalence_classes[int_damp_out] = np.append(eqv_class, [symbol_block], axis=0)
+            int_dump_out = self.integrate_and_dump_no_noise(symbol_block)
+            eqv_class = self.equivalence_classes.get(int_dump_out,np.empty((0,self.symbol_block_length)))
+            self.equivalence_classes[int_dump_out] = np.append(eqv_class, [symbol_block], axis=0)
         
-    def generate_symbol_block(self,n):
-        indices = self.numberToBaseN(n)
+    def generate_symbol_block(self,num):
+        indices = self.numberToBaseN(num)
         return self.constellation[indices]
 
-    def numberToBaseN(self, n):
+    def numberToBaseN(self, num):
         b = len(self.constellation)
         digits = np.zeros(self.symbol_block_length, dtype=np.int64)
         i = 0
-        while n:
-            digits[i] = int(n % b)
-            n //= b
+        while num:
+            digits[i] = int(num % b)
+            num //= b
             i = i + 1
         return digits
 
@@ -74,5 +74,5 @@ class Equivalence_classes_calculator:
             print_target(str(key)+"\t\t"+str(value)+"\n")
             total_classes += value 
         rate_loss = 1/self.symbol_block_length*np.log2(len(self.constellation)**self.symbol_block_length/total_classes)
-        print_target("total amount ocf classes equivalence classes: " + str(total_classes)+"\n")
+        print_target("total amount of equivalence classes: " + str(total_classes)+"\n")
         print_target("rate loss: "+str(rate_loss)+" [bit/sym]\n")

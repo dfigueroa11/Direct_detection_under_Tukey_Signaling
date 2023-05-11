@@ -21,6 +21,6 @@ Class size 	Number of classes
 8		1152
 16		1728
 32		864
-total amount ocf classes equivalence classes: 4000
+total amount of equivalence classes: 4000
 rate loss: 1.0085539288344783 [bit/sym]
---- 1.8508780002593994 seconds ---
+--- 1.9373760223388672 seconds ---
