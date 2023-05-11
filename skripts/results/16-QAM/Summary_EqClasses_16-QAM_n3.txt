@@ -1,0 +1,26 @@
+For the constellation 16-QAM with points:
+[ 3.+3.j
+ 3.+1.j
+ 1.+3.j
+ 1.+1.j
+ 3.-3.j
+ 3.-1.j
+ 1.-3.j
+ 1.-1.j
+-3.+3.j
+ -3.+1.j
+-1.+3.j
+-1.+1.j
+-3.-3.j
+-3.-1.j
+-1.-3.j
+-1.-1.j]
+and symbol block length n = 3
+Class size 	Number of classes
+4		32
+8		292
+16		100
+32		1
+total amount ocf classes equivalence classes: 425
+rate loss: 1.089560322991645 [bit/sym]
+--- 0.12185502052307129 seconds ---

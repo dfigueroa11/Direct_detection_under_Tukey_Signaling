@@ -1,0 +1,26 @@
+For the constellation 4-Ring_4-Ary with points:
+[ 1.0000e+00+0.0000e+00j
+ 6.1232e-17+1.0000e+00j
+-1.0000e+00+1.2246e-16j
+ -1.8370e-16-1.0000e+00j
+ 3.0000e+00+0.0000e+00j
+ 1.8370e-16+3.0000e+00j
+ -3.0000e+00+3.6739e-16j
+-5.5109e-16-3.0000e+00j
+ 1.4142e+00+1.4142e+00j
+ -1.4142e+00+1.4142e+00j
+-1.4142e+00-1.4142e+00j
+ 1.4142e+00-1.4142e+00j
+  2.8284e+00+2.8284e+00j
+-2.8284e+00+2.8284e+00j
+-2.8284e+00-2.8284e+00j
+  2.8284e+00-2.8284e+00j]
+and symbol block length n = 4
+Class size 	Number of classes
+4		256
+8		1152
+16		1728
+32		864
+total amount ocf classes equivalence classes: 4000
+rate loss: 1.0085539288344783 [bit/sym]
+--- 1.8508780002593994 seconds ---

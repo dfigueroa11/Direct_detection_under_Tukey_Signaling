@@ -1,0 +1,15 @@
+For the constellation 4-PSK with points:
+[ 1.0000e+00+0.0000e+00j
+ 6.1232e-17+1.0000e+00j
+-1.0000e+00+1.2246e-16j
+ -1.8370e-16-1.0000e+00j]
+and symbol block length n = 5
+Class size 	Number of classes
+4		16
+8		32
+16		24
+32		8
+64		1
+total amount ocf classes equivalence classes: 81
+rate loss: 0.7320299994230751 [bit/sym]
+--- 0.028988122940063477 seconds ---
