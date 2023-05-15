@@ -41,13 +41,13 @@ class Equiv_class_analyzator:
     def plot_equivalence_class(self, equivalence_class, new_fig=False, figsize=(8,8), alpha=1):
         if new_fig:
             plt.figure(figsize=figsize)
-        for symbol_block in range(np.shape(equivalence_class)[0]):
-            self.plot_symbol_block(equivalence_class[symbol_block,:],color='C{}'.format(symbol_block),alpha=alpha)
+        for i, symbol_block in enumerate(equivalence_class):
+            self.plot_symbol_block(symbol_block,color='C{}'.format(i),alpha=alpha)
 
     def plot_all_equivalence_classes(self, equivalence_classes, constellation):
-        for i in range(np.shape(equivalence_classes)[0]):
+        for i, equivalence_class in enumerate(equivalence_classes):
             plt.figure(i,(8,8))
             self.plot_constellation(constellation)
-            self.plot_equivalence_class(equivalence_classes[i,:,:])
+            self.plot_equivalence_class(equivalence_class)
         plt.xlabel("Re")
         plt.ylabel("Im")
