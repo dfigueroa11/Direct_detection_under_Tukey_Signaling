@@ -107,22 +107,90 @@ def plot_eq_class(file_name, constellation, symbol_block_length, class_size, num
 # plt.show()
 # #########################################################################
 
+# #########################################################################
+# file_name = "results/10-Ring_10-Ary/EqClasses_10-Ring_10-Ary_n3.npy"
+# const = const_mk.n_ring_m_ary_phase([1,2,3,4,5,6,7,8,9,10],10)
+# sym_block_len = 3
+# class_size = 40
+# eq_class_analyzer = equiv_class_analyzator.Equiv_class_analyzator(file_name,sym_block_len)
+# eq_classes_size_n = eq_class_analyzer.get_equiv_classes_of_size_n(class_size)
+# total_num_classes = np.shape(eq_classes_size_n)[0]
+# i_class_size_40 = (19042,8460,6926,16099)
+# i_sym_blocks_2 = (37,39,19,17)
+# rng = np.random.default_rng()
+# for j in [1000]:#rng.choice(total_num_classes, size=1):
+#     plt.figure(figsize=(8,8))
+#     eq_class_analyzer.plot_constellation(const)
+#     eq_class_analyzer.plot_equivalence_class(eq_classes_size_n[j,:,:])
+#     for i in i_sym_blocks_2:#range(class_size):#i_class_size_40:#rng.choice(total_num_classes, size=20):#
+#         plt.figure(i,figsize=(8,8))
+#         eq_class_analyzer.plot_constellation(const)
+#         eq_class_analyzer.plot_symbol_block(eq_classes_size_n[j,i,:])
+#     # for i in i_sym_blocks_2:#range(class_size):#i_class_size_20:#rng.choice(total_num_classes, size=20):
+#     #     plt.figure(i,figsize=(8,8))
+#     #     eq_class_analyzer.plot_constellation(const)
+#     #     eq_class_analyzer.plot_symbol_block(eq_classes_size_n[i_class_size_20,i,:])
+#     # plt.figure(figsize=(8,8))
+#     # eq_class_analyzer.plot_constellation(const)
+#     # eq_class_analyzer.plot_equivalence_class(eq_classes_size_n[i_class_size_20,(0,8),:])
+#     # plt.figure(figsize=(8,8))
+#     # eq_class_analyzer.plot_constellation(const)
+#     # eq_class_analyzer.plot_equivalence_class(eq_classes_size_n[i_class_size_20,i_sym_blocks_1,:])
+#     # plt.figure(figsize=(8,8))
+#     # eq_class_analyzer.plot_constellation(const)
+#     # eq_class_analyzer.plot_equivalence_class(eq_classes_size_n[i_class_size_20,i_sym_blocks_2,:])
+#     plt.show()
+# #########################################################################
+
+# #########################################################################
+# file_name = "results/4-Ring_4-Ary/EqClasses_4-Ring_4-Ary_n4.npy"
+# const = const_mk.n_ring_m_ary_phase([1,2,3,4],4)
+# sym_block_len = 4
+# class_size = 8
+# eq_class_analyzer = equiv_class_analyzator.Equiv_class_analyzator(file_name,sym_block_len)
+# eq_classes_size_n = eq_class_analyzer.get_equiv_classes_of_size_n(class_size)
+# total_num_classes = np.shape(eq_classes_size_n)[0]
+# i_class_size_40 = (19042,8460,6926,16099)
+# i_sym_blocks_2 = (37,39,19,17)
+# rng = np.random.default_rng()
+# for j in rng.choice(total_num_classes, size=3):#[1000]:#
+#     plt.figure(figsize=(8,8))
+#     eq_class_analyzer.plot_constellation(const)
+#     eq_class_analyzer.plot_equivalence_class(eq_classes_size_n[j,:,:])
+#     for i in range(class_size):#i_sym_blocks_2:#i_class_size_40:#rng.choice(total_num_classes, size=20):#
+#         plt.figure(i,figsize=(8,8))
+#         eq_class_analyzer.plot_constellation(const)
+#         eq_class_analyzer.plot_symbol_block(eq_classes_size_n[j,i,:])
+#     # for i in i_sym_blocks_2:#range(class_size):#i_class_size_20:#rng.choice(total_num_classes, size=20):
+#     #     plt.figure(i,figsize=(8,8))
+#     #     eq_class_analyzer.plot_constellation(const)
+#     #     eq_class_analyzer.plot_symbol_block(eq_classes_size_n[i_class_size_20,i,:])
+#     # plt.figure(figsize=(8,8))
+#     # eq_class_analyzer.plot_constellation(const)
+#     # eq_class_analyzer.plot_equivalence_class(eq_classes_size_n[i_class_size_20,(0,8),:])
+#     # plt.figure(figsize=(8,8))
+#     # eq_class_analyzer.plot_constellation(const)
+#     # eq_class_analyzer.plot_equivalence_class(eq_classes_size_n[i_class_size_20,i_sym_blocks_1,:])
+#     # plt.figure(figsize=(8,8))
+#     # eq_class_analyzer.plot_constellation(const)
+#     # eq_class_analyzer.plot_equivalence_class(eq_classes_size_n[i_class_size_20,i_sym_blocks_2,:])
+#     plt.show()
+# #########################################################################
+
 #########################################################################
-file_name = "results/10-Ring_10-Ary/EqClasses_10-Ring_10-Ary_n3.npy"
-const = const_mk.n_ring_m_ary_phase([1,2,3,4,5,6,7,8,9,10],10)
-sym_block_len = 3
-class_size = 40
+file_name = "results/5-Ring_5-Ary/EqClasses_5-Ring_5-Ary_n5.npy"
+const = const_mk.n_ring_m_ary_phase([1,2,3,4,5],5)
+sym_block_len = 5
+class_size = 5*2**4
 eq_class_analyzer = equiv_class_analyzator.Equiv_class_analyzator(file_name,sym_block_len)
 eq_classes_size_n = eq_class_analyzer.get_equiv_classes_of_size_n(class_size)
 total_num_classes = np.shape(eq_classes_size_n)[0]
-i_class_size_40 = (19042,8460,6926,16099)
-i_sym_blocks_2 = (37,39,19,17)
 rng = np.random.default_rng()
-for j in [1000]:#rng.choice(total_num_classes, size=1):
+for j in rng.choice(total_num_classes, size=5):#[1000]:#
     plt.figure(figsize=(8,8))
     eq_class_analyzer.plot_constellation(const)
     eq_class_analyzer.plot_equivalence_class(eq_classes_size_n[j,:,:])
-    for i in i_sym_blocks_2:#range(class_size):#i_class_size_40:#rng.choice(total_num_classes, size=20):#
+    for i in range(class_size):#i_sym_blocks_2:#i_class_size_40:#rng.choice(total_num_classes, size=20):#
         plt.figure(i,figsize=(8,8))
         eq_class_analyzer.plot_constellation(const)
         eq_class_analyzer.plot_symbol_block(eq_classes_size_n[j,i,:])
@@ -142,3 +210,36 @@ for j in [1000]:#rng.choice(total_num_classes, size=1):
     plt.show()
 #########################################################################
 
+
+# #########################################################################
+# file_name = "results/5-Ring_4-Ary/EqClasses_5-Ring_4-Ary_n3.npy"
+# const = const_mk.n_ring_m_ary_phase([1,2,3,4,5],4)
+# sym_block_len = 3
+# class_size = 16
+# eq_class_analyzer = equiv_class_analyzator.Equiv_class_analyzator(file_name,sym_block_len)
+# eq_classes_size_n = eq_class_analyzer.get_equiv_classes_of_size_n(class_size)
+# total_num_classes = np.shape(eq_classes_size_n)[0]
+# rng = np.random.default_rng()
+# for j in rng.choice(total_num_classes, size=20):
+#     plt.figure(figsize=(8,8))
+#     eq_class_analyzer.plot_constellation(const)
+#     eq_class_analyzer.plot_equivalence_class(eq_classes_size_n[j,:,:])
+#     for i in range(class_size):#i_sym_blocks_2:#i_class_size_40:#rng.choice(total_num_classes, size=20):#
+#         plt.figure(i,figsize=(8,8))
+#         eq_class_analyzer.plot_constellation(const)
+#         eq_class_analyzer.plot_symbol_block(eq_classes_size_n[j,i,:])
+#     # for i in i_sym_blocks_2:#range(class_size):#i_class_size_20:#rng.choice(total_num_classes, size=20):
+#     #     plt.figure(i,figsize=(8,8))
+#     #     eq_class_analyzer.plot_constellation(const)
+#     #     eq_class_analyzer.plot_symbol_block(eq_classes_size_n[i_class_size_20,i,:])
+#     # plt.figure(figsize=(8,8))
+#     # eq_class_analyzer.plot_constellation(const)
+#     # eq_class_analyzer.plot_equivalence_class(eq_classes_size_n[i_class_size_20,(0,8),:])
+#     # plt.figure(figsize=(8,8))
+#     # eq_class_analyzer.plot_constellation(const)
+#     # eq_class_analyzer.plot_equivalence_class(eq_classes_size_n[i_class_size_20,i_sym_blocks_1,:])
+#     # plt.figure(figsize=(8,8))
+#     # eq_class_analyzer.plot_constellation(const)
+#     # eq_class_analyzer.plot_equivalence_class(eq_classes_size_n[i_class_size_20,i_sym_blocks_2,:])
+#     plt.show()
+# #########################################################################
