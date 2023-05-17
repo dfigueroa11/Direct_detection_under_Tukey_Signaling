@@ -1,5 +1,5 @@
 # ignore equivalence class results .npy to avoid GitHub large size problems
-skripts/results/**/*.npy
+skripts/**/*.npy
 
 **/.DS_Store
 
