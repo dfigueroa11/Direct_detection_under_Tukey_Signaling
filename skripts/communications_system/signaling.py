@@ -26,7 +26,6 @@ class Signaling_block:
         self.calc_tukey_window()
         
     def calc_time_vec(self):
-        
         if self.sps % 2:
             t_pos = np.arange(start=0, stop=self.symbol_time*(1+self.beta)/2+self.Ts, step=self.Ts)
             self.time_vec = np.append(-t_pos[-1:0:-1],t_pos)
@@ -36,7 +35,32 @@ class Signaling_block:
     
     def calc_tukey_window(self):
         self.tukey_window = np.ones(self.window_len)
-        indx = np.where(np.abs(np.abs(self.time_vec/self.symbol_time)-1/2) - self.beta/2 <= 1e-7)
+        indx = np.where(np.abs(np.abs(self.time_vec/self.symbol_time)-1/2) <= self.beta/2)
         self.tukey_window[indx] = 1/2*(1-np.sin(np.pi*(2*np.abs(self.time_vec[indx]/self.symbol_time)-1)/(2*self.beta)))
-        self.tukey_window *= 2/np.sqrt(4-self.beta)
+        self.tukey_window *= 2/np.sqrt(4-self.beta)*(abs(self.time_vec) <= self.symbol_time*(1+self.beta)/2)
 
+    def generate_signal_1(self, symbols):
+        symbols_up_samp = np.zeros((len(symbols)-1)*self.sps+1, dtype=complex)
+        symbols_up_samp[::self.sps] = symbols
+        return sig.fftconvolve(symbols_up_samp,self.tukey_window)
+
+    def generate_signal_2(self, symbols):
+        symbols_up_samp = np.zeros((len(symbols)-1)*self.sps+1, dtype=complex)
+        symbols_up_samp[::self.sps] = symbols
+        return np.convolve(symbols_up_samp,self.tukey_window)
+
+    def generate_signal_3(self, symbols):
+        symbols_up_samp = np.zeros((len(symbols)-1)*self.sps+1, dtype=complex)
+        symbols_up_samp[::self.sps] = symbols
+        return sig.convolve(symbols_up_samp,self.tukey_window)
+
+    def generate_signal_4(self, symbols):
+        symbols_up_samp = np.zeros((len(symbols)-1)*self.sps+1, dtype=complex)
+        symbols_up_samp[::self.sps] = symbols
+        return sig.oaconvolve(np.real(symbols_up_samp),self.tukey_window)+1j*sig.oaconvolve(np.imag(symbols_up_samp),self.tukey_window)
+    
+    def generate_signal_5(self, symbols):
+        signal = np.zeros((len(symbols)-1)*self.sps+self.window_len, dtype=complex)
+        for n,sym in enumerate(symbols):
+            signal[n*self.sps:n*self.sps+self.window_len] += sym*self.tukey_window
+        return signal
