@@ -1,0 +1,3 @@
+{
+    "python.analysis.extraPaths": ["${workspaceFolder}/Equivalence_classes", "${workspaceFolder}/communications_system"]
+}
