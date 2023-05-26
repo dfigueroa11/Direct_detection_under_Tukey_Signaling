@@ -31,12 +31,14 @@ class Signaling_block:
         else:
             t_pos = np.arange(start=self.Ts/2, stop=self.symbol_time*(1+self.beta)/2, step=self.Ts)
             self.time_vec = np.append(-t_pos[-1::-1],t_pos)
+        if self.time_vec[-1]>(1+self.beta)*self.symbol_time/2:
+            self.time_vec = self.time_vec[1:-1]
     
     def calc_tukey_window(self):
         self.tukey_window = np.ones(self.window_len)
         indx = np.where(np.abs(np.abs(self.time_vec/self.symbol_time)-1/2) <= self.beta/2)
         self.tukey_window[indx] = 1/2*(1-np.sin(np.pi*(2*np.abs(self.time_vec[indx]/self.symbol_time)-1)/(2*self.beta)))
-        self.tukey_window *= 2/np.sqrt(4-self.beta)*(abs(self.time_vec) <= self.symbol_time*(1+self.beta)/2)
+        self.tukey_window *= 2/np.sqrt(4-self.beta)*(abs(self.time_vec) < self.symbol_time*(1+self.beta)/2)
 
     def generate_signal(self, symbols):
         symbols_up_samp = np.zeros((len(symbols)-1)*self.sps+1, dtype=complex)
