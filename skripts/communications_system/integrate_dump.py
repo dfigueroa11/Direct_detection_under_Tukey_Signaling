@@ -20,11 +20,12 @@ class Integrate_dump_block:
             print("somthing is wrong with the window")
     
     def integrate_dump(self, signal):
-        num_symbols = int((len(signal)-self.window_len)/self.sps+1)
+        num_symbols = int((len(signal)-self.window_len)/(self.sps-1)+1)
         y = np.empty(num_symbols)
         z = np.empty(num_symbols)
         for i in range(num_symbols):
-            start = i*(self.ISI_present_len+self.ISI_free_len)
-            y[i] = np.trapz(signal[start+self.ISI_present_len:start+self.ISI_present_len+self.ISI_free_len], dx=self.Ts)
-            z[i] = np.trapz(signal[start:start+self.ISI_present_len], dx=self.Ts)
+            start_y = i*(self.ISI_present_len+self.ISI_free_len-1)+self.ISI_present_len
+            start_z = start_y+self.ISI_free_len-1
+            y[i] = np.trapz(signal[start_y : start_y+self.ISI_free_len], dx=self.Ts)
+            z[i] = np.trapz(signal[start_z : start_z+self.ISI_present_len+1], dx=self.Ts)
         return y,z

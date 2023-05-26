@@ -15,7 +15,7 @@ int_dump_block = integrate_dump.Integrate_dump_block(sig_block)
 
 
 rng = np.random.default_rng()
-N_sym_blocks = 2
+N_sym_blocks = 10
 
 k_vec = rng.choice(class_rep_block.representative_class_size, N_sym_blocks)
 symbols = class_rep_block.get_symbol_blocks(k_vec)
@@ -23,16 +23,20 @@ tx_signal = sig_block.generate_signal(symbols)
 rx_signal = photodiode_block.square_law_detection(tx_signal)
 y,z = int_dump_block.integrate_dump(rx_signal)
 
-print(int_dump_block.ISI_present_len)
-print(int_dump_block.ISI_free_len)
-print(y)
-print(z)
 
 
 plt.figure(1)
 plt.stem(sig_block.time_vec,sig_block.tukey_window)
 
+
 plt.figure(2)
-plt.stem(rx_signal)
+plt.stem(np.arange(len(rx_signal))*sig_block.Ts, rx_signal)
+
+plt.figure(3)
+plt.stem(y)
+
+plt.figure(4)
+plt.stem(z)
+
 
 plt.show()
