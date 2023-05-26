@@ -41,7 +41,7 @@ class Signaling_block:
         self.tukey_window *= 2/np.sqrt(4-self.beta)*(abs(self.time_vec) < self.symbol_time*(1+self.beta)/2)
 
     def generate_signal(self, symbols):
-        symbols_up_samp = np.zeros((len(symbols)-1)*self.sps+1, dtype=complex)
-        symbols_up_samp[::self.sps] = symbols
+        symbols_up_samp = np.zeros((len(symbols)-1)*(self.sps-1)+1, dtype=complex)
+        symbols_up_samp[::self.sps-1] = symbols
         return np.convolve(symbols_up_samp,self.tukey_window)
     
