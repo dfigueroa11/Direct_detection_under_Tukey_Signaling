@@ -9,7 +9,7 @@ import integrate_dump
 
 file_name = "communications_system/representative_classes/2-Ring_4-Ary_n3.npy"
 class_rep_block = class_representative.Class_representative_block(file_name)
-sig_block = signaling.Signaling_block(symbol_time=1, sps=11, beta=0.6)
+sig_block = signaling.Signaling_block(symbol_time=1, sps=10, beta=0.63)
 photodiode_block = photodiode.Photodiode(responsivity=1, sigma2_sh=0, sigma_2_th=0)
 int_dump_block = integrate_dump.Integrate_dump_block(sig_block)
 

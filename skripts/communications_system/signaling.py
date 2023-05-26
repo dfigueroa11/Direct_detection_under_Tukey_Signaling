@@ -13,17 +13,31 @@ class Signaling_block:
     tukey_window = None
     
     
-    def __init__(self, symbol_time=1, sps=10, beta=0.5):
+    def __init__(self, symbol_time=1, sps=10, beta=0.5, adjust_beta=True):
         self.symbol_time = symbol_time
         self.sps = sps
         self.beta = beta
-        self.support_time = symbol_time*(1+beta)
         self.fs = (sps-1)/symbol_time
         self.Ts = 1/self.fs
+        if round((1+beta)*(sps-1)) != (1+beta)*(sps-1):
+            print("the choosed beta is not the most apropiate\n"+
+                  "time duration of the window do not match a sample point")
+            if adjust_beta: 
+                self.adjust_beta()
         self.calc_time_vec()
         self.window_len = len(self.time_vec)
         self.calc_tukey_window()
         
+    def adjust_beta(self):
+        print("original beta: {}".format(self.beta))
+        if self.sps % 2:
+            n = round(((1+self.beta)*(self.sps-1)-1)/2)
+            self.beta = (2*n+1)/(self.sps-1)-1
+        else:
+            n = round((1+self.beta)*(self.sps-1))
+            self.beta = n/(self.sps-1)-1
+        print("beta was set to {}".format(self.beta))
+
     def calc_time_vec(self):
         if self.sps % 2:
             t_pos = np.arange(start=0, stop=self.symbol_time*(1+self.beta)/2+self.Ts, step=self.Ts)
