@@ -19,34 +19,39 @@ class Signaling_block:
         self.beta = beta
         self.fs = (sps-1)/symbol_time
         self.Ts = 1/self.fs
-        if round((1+beta)*(sps-1)) != (1+beta)*(sps-1):
+        if self.inappropriate_beta():
             print("the choosed beta is not the most apropiate\n"+
                   "time duration of the window do not match a sample point")
-            if adjust_beta: 
-                self.adjust_beta()
+            self.adjust_beta(adjust_beta)
         self.calc_time_vec()
         self.window_len = len(self.time_vec)
         self.calc_tukey_window()
         
-    def adjust_beta(self):
+    def inappropriate_beta(self):
+        return (1+self.beta)*(self.sps-1) % 2 != (self.sps+1) % 2
+    
+    def adjust_beta(self, adjust):
+        if not adjust:
+            return
         print("original beta: {}".format(self.beta))
-        if self.sps % 2:
-            n = round(((1+self.beta)*(self.sps-1)-1)/2)
-            self.beta = (2*n+1)/(self.sps-1)-1
-        else:
-            n = round((1+self.beta)*(self.sps-1))
-            self.beta = n/(self.sps-1)-1
+        self.beta = self.correct_n()/(self.sps-1)-1
         print("beta was set to {}".format(self.beta))
 
+    def correct_n(self):
+        n = np.trunc((self.beta+1)*(self.sps-1))
+        if self.sps % 2 == 1:
+            n += n % 2
+        else:
+            n += (n+1) % 2
+        return n
+
     def calc_time_vec(self):
-        if self.sps % 2:
-            t_pos = np.arange(start=0, stop=self.symbol_time*(1+self.beta)/2+self.Ts, step=self.Ts)
+        if self.sps % 2 == 1:
+            t_pos = np.arange(start=0, stop=self.symbol_time+self.Ts, step=self.Ts)
             self.time_vec = np.append(-t_pos[-1:0:-1],t_pos)
         else:
-            t_pos = np.arange(start=self.Ts/2, stop=self.symbol_time*(1+self.beta)/2, step=self.Ts)
+            t_pos = np.arange(start=self.Ts/2, stop=self.symbol_time+self.Ts, step=self.Ts)
             self.time_vec = np.append(-t_pos[-1::-1],t_pos)
-        if self.time_vec[-1]>(1+self.beta)*self.symbol_time/2:
-            self.time_vec = self.time_vec[1:-1]
     
     def calc_tukey_window(self):
         self.tukey_window = np.ones(self.window_len)
