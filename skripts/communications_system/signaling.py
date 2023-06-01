@@ -46,12 +46,13 @@ class Signaling_block:
         return n
 
     def calc_time_vec(self):
-        if self.sps % 2 == 1:
-            t_pos = np.arange(start=0, stop=self.symbol_time+self.Ts, step=self.Ts)
+        if self.sps % 2:
+            t_pos = np.arange(start=0, stop=self.symbol_time*(1+self.beta)+self.Ts, step=self.Ts)
             self.time_vec = np.append(-t_pos[-1:0:-1],t_pos)
         else:
-            t_pos = np.arange(start=self.Ts/2, stop=self.symbol_time+self.Ts, step=self.Ts)
+            t_pos = np.arange(start=self.Ts/2, stop=self.symbol_time*(1+self.beta), step=self.Ts)
             self.time_vec = np.append(-t_pos[-1::-1],t_pos)
+        self.time_vec = self.time_vec[np.where(abs(self.time_vec) - (1+self.beta)*self.symbol_time/2 <= 1e-9)]
     
     def calc_tukey_window(self):
         self.tukey_window = np.ones(self.window_len)
