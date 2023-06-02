@@ -1,12 +1,4 @@
-For the constellation 2-Ring_4-Ary with points:
-[ 1.0000e+00+0.0000e+00j
- 6.1232e-17+1.0000e+00j
--1.0000e+00+1.2246e-16j
- -1.8370e-16-1.0000e+00j
- 1.4142e+00+1.4142e+00j
--1.4142e+00+1.4142e+00j
- -1.4142e+00-1.4142e+00j
- 1.4142e+00-1.4142e+00j]
+For the constellation 2-Ring_4-Ary
 and symbol block length n = 4
 Class size 	Number of classes
 4		16
@@ -15,4 +7,4 @@ Class size 	Number of classes
 32		54
 total amount of equivalence classes: 250
 rate loss: 1.0085539288344783 [bit/sym]
---- 0.12287473678588867 seconds ---
+--- 0.1382741928100586 seconds ---

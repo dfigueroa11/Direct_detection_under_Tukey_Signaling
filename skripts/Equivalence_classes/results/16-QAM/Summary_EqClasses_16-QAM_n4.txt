@@ -1,20 +1,4 @@
-For the constellation 16-QAM with points:
-[ 3.+3.j
- 3.+1.j
- 1.+3.j
- 1.+1.j
- 3.-3.j
- 3.-1.j
- 1.-3.j
- 1.-1.j
--3.+3.j
- -3.+1.j
--1.+3.j
--1.+1.j
--3.-3.j
--3.-1.j
--1.-3.j
--1.-1.j]
+For the constellation 16-QAM
 and symbol block length n = 4
 Class size 	Number of classes
 4		128
@@ -24,4 +8,4 @@ Class size 	Number of classes
 64		1
 total amount of equivalence classes: 5175
 rate loss: 0.9156642131814875 [bit/sym]
---- 2.1752371788024902 seconds ---
+--- 2.071263074874878 seconds ---

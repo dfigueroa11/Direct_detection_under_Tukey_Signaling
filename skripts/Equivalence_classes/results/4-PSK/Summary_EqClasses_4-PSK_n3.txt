@@ -1,8 +1,4 @@
-For the constellation 4-PSK with points:
-[ 1.0000e+00+0.0000e+00j
- 6.1232e-17+1.0000e+00j
--1.0000e+00+1.2246e-16j
- -1.8370e-16-1.0000e+00j]
+For the constellation 4-PSK
 and symbol block length n = 3
 Class size 	Number of classes
 4		4
@@ -10,4 +6,4 @@ Class size 	Number of classes
 16		1
 total amount of equivalence classes: 9
 rate loss: 0.9433583328525624 [bit/sym]
---- 0.0029191970825195312 seconds ---
+--- 0.0021102428436279297 seconds ---
