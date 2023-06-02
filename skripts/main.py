@@ -17,7 +17,7 @@ sig_block = signaling.Signaling_block(symbol_time=1, sps=11, beta=0.6, adjust_be
 photodiode_block = photodiode.Photodiode(responsivity=1, sigma2_sh=0, sigma_2_th=0)
 int_dump_block = integrate_dump.Integrate_dump_block(sig_block)
 
-rng = np.random.default_rng()
+rng = np.random.default_rng(4)
 N_sym_blocks = 10
 
 k_vec = rng.choice(class_rep_block.representative_class_size, N_sym_blocks)

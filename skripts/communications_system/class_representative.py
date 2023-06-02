@@ -13,22 +13,14 @@ class Class_representative_block:
         self.constellation = constellation
         self.representative_class_size = len(self.representative_class)
     
-    def get_symbol_blocks(self, k_vec):
-        symbol_blocks = np.empty(shape=self.symbol_block_length*len(k_vec),dtype=complex)
-        for i,k in enumerate(k_vec):
-            symbol_blocks[i*self.symbol_block_length:(i+1)*self.symbol_block_length] = self.generate_symbol_block(self.representative_class[k])
-        return symbol_blocks
-    
-    def generate_symbol_block(self,num):
-        indices = self.numberToBaseN(num)
+    def get_symbol_blocks(self,k_vec):
+        base = len(self.constellation)
+        indices = np.zeros(self.symbol_block_length*len(k_vec), dtype=np.int32)
+        i = 0
+        for sym in self.representative_class[k_vec]:
+            for j in range(self.symbol_block_length):
+                indices[i] = int(sym % base)
+                sym //= base
+                i = i + 1
         return self.constellation[indices]
 
-    def numberToBaseN(self, num):
-        b = len(self.constellation)
-        digits = np.zeros(self.symbol_block_length, dtype=np.int32)
-        i = 0
-        while num:
-            digits[i] = int(num % b)
-            num //= b
-            i = i + 1
-        return digits
