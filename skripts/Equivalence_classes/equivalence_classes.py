@@ -45,7 +45,7 @@ def calculate_equiv_classes(constellation, sym_block_len_start, sym_block_len_en
 # ###########################################################################
 # const_name = "5-Ring_5-Ary"
 # const = const_mk.n_ring_m_ary_phase([1,2,3,4,5],5)
-# calculate_equiv_classes(const, 3, 5, const_name)
+# calculate_equiv_classes(const, 3, 4, const_name)
 # ###########################################################################
 
 # ###########################################################################
