@@ -29,6 +29,8 @@ rx_signal = photodiode_block.square_law_detection(tx_signal)
 y,z = int_dump_block.integrate_dump(rx_signal)
 e = time.time()
 print(e-s)
+
+
 # plt.figure(1)
 # plt.stem(sig_block.time_vec,sig_block.tukey_window)
 
@@ -37,4 +39,4 @@ print(e-s)
 # plt.stem(np.arange(len(rx_signal))*sig_block.Ts, rx_signal)
 
 
-plt.show()
+# plt.show()
