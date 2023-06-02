@@ -27,7 +27,7 @@ class Equivalence_classes_calculator:
         for n in range(len(self.constellation)**self.symbol_block_length):
             symbol_block = self.generate_symbol_block(n)
             int_dump_out = self.integrate_and_dump_no_noise(symbol_block)
-            eqv_class = self.equivalence_classes.get(int_dump_out,np.empty((0,1)))
+            eqv_class = self.equivalence_classes.get(int_dump_out,np.empty((0,1),dtype=np.int32))
             self.equivalence_classes[int_dump_out] = np.append(eqv_class, n)
         
     def generate_symbol_block(self,num):
@@ -36,7 +36,7 @@ class Equivalence_classes_calculator:
 
     def numberToBaseN(self, num):
         b = len(self.constellation)
-        digits = np.zeros(self.symbol_block_length, dtype=np.int64)
+        digits = np.zeros(self.symbol_block_length, dtype=np.int32)
         i = 0
         while num:
             digits[i] = int(num % b)
