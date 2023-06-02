@@ -1,7 +1,3 @@
-# ignore equivalence class results .npy to avoid GitHub large size problems
-skripts/**/*.npy
-# do not ignore representative classes
-!skripts/communications_system/representative_classes/*.npy
 
 **/.DS_Store
 
