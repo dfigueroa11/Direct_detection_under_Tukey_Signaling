@@ -11,13 +11,9 @@ class Equivalence_classes_calculator:
     def __init__(self):
         pass
             
-    def __init__(self,constell,constell_name,symbol_block_len):
+    def __init__(self,constell,constell_name,symbol_block_len=3):
         self.constellation =   constell
         self.symbol_block_length = symbol_block_len
-        self.constellation_name = constell_name
-
-    def __init__(self,constell,constell_name):
-        self.constellation =   constell
         self.constellation_name = constell_name
 
     ################# main algorithm to find the equivalent classes
