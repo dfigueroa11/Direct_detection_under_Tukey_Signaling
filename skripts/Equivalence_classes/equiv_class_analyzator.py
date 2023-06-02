@@ -2,19 +2,31 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 
+import equiv_classes_calculator
+
 class Equiv_class_analyzator:
     
     equivalence_classes = None
     symbol_block_length = None
     num_equiv_classes = None
+    constellation = None
 
-    def __init__(self, file_name,symbol_block_length):
-        self.equivalence_classes = self.load_equiv_classes_file(file_name)
+    def __init__(self, file_name,symbol_block_length,constellation):
+        self.constellation = constellation
+        self.eq_class_cal = equiv_classes_calculator.Equivalence_classes_calculator(constellation,"",symbol_block_length)
         self.symbol_block_length = symbol_block_length
+        self.equivalence_classes = self.load_equiv_classes_file(file_name)
         self.num_equiv_classes = len(self.equivalence_classes)
 
     def load_equiv_classes_file(self, file_name):
-        return np.load(file_name, allow_pickle=True).item()
+        equivalence_classes = np.load(file_name, allow_pickle=True).item()
+        eq_class_cal = equiv_classes_calculator.Equivalence_classes_calculator(self.constellation,"",self.symbol_block_length)
+        for key, value in equivalence_classes.items():
+            equivalence_class = np.empty((len(value),self.symbol_block_length),dtype=complex)
+            for i,sym_block in enumerate(value):
+                equivalence_class[i,:] = eq_class_cal.generate_symbol_block(sym_block)
+            equivalence_classes[key] = equivalence_class
+        return equivalence_classes
 
     def get_equiv_classes_of_size_n(self, class_size):
         classes_of_size_n = np.empty((self.num_equiv_classes, class_size, self.symbol_block_length), dtype=np.complex64)

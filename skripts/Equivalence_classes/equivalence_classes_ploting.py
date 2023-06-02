@@ -8,7 +8,7 @@ import constellation_maker as const_mk
 
 def plot_eq_class(file_name, constellation, symbol_block_length, class_size, num_classes_ploted, num_sym_blocks_ploted):
     rng = np.random.default_rng()
-    eq_class_analyzer = equiv_class_analyzator.Equiv_class_analyzator(file_name,symbol_block_length)
+    eq_class_analyzer = equiv_class_analyzator.Equiv_class_analyzator(file_name,symbol_block_length,constellation)
     eq_classes_size_n = eq_class_analyzer.get_equiv_classes_of_size_n(class_size)
     num_classes_ploted = min(num_classes_ploted,np.shape(eq_classes_size_n)[0])
     num_sym_blocks_ploted = min(num_sym_blocks_ploted,np.shape(eq_classes_size_n)[1])
@@ -26,8 +26,8 @@ def plot_eq_class(file_name, constellation, symbol_block_length, class_size, num
 # const = const_mk.n_ring_m_ary_phase([1,2,3,4,5,6,7,8,9,10],10)
 # sym_block_len = 3
 # class_size = 40
-# num_classes_ploted = 40
-# num_sym_blocks_ploted = 1
+# num_classes_ploted = 5
+# num_sym_blocks_ploted = 40
 # plot_eq_class(file_name, const, sym_block_len, class_size, num_classes_ploted, num_sym_blocks_ploted)
 # #########################################################################
 
@@ -77,7 +77,7 @@ def plot_eq_class(file_name, constellation, symbol_block_length, class_size, num
 # const = const_mk.n_ring_m_ary_phase([1,2,3,4,5,6,7,8,9,10],10)
 # sym_block_len = 3
 # class_size = 20
-# eq_class_analyzer = equiv_class_analyzator.Equiv_class_analyzator(file_name,sym_block_len)
+# eq_class_analyzer = equiv_class_analyzator.Equiv_class_analyzator(file_name,sym_block_len,const)
 # eq_classes_size_n = eq_class_analyzer.get_equiv_classes_of_size_n(class_size)
 # total_num_classes = np.shape(eq_classes_size_n)[0]
 # i_class_size_20 = 7771
@@ -112,7 +112,7 @@ def plot_eq_class(file_name, constellation, symbol_block_length, class_size, num
 # const = const_mk.n_ring_m_ary_phase([1,2,3,4,5,6,7,8,9,10],10)
 # sym_block_len = 3
 # class_size = 40
-# eq_class_analyzer = equiv_class_analyzator.Equiv_class_analyzator(file_name,sym_block_len)
+# eq_class_analyzer = equiv_class_analyzator.Equiv_class_analyzator(file_name,sym_block_len,const)
 # eq_classes_size_n = eq_class_analyzer.get_equiv_classes_of_size_n(class_size)
 # total_num_classes = np.shape(eq_classes_size_n)[0]
 # i_class_size_40 = (19042,8460,6926,16099)
@@ -147,7 +147,7 @@ def plot_eq_class(file_name, constellation, symbol_block_length, class_size, num
 # const = const_mk.n_ring_m_ary_phase([1,2,3,4],4)
 # sym_block_len = 4
 # class_size = 8
-# eq_class_analyzer = equiv_class_analyzator.Equiv_class_analyzator(file_name,sym_block_len)
+# eq_class_analyzer = equiv_class_analyzator.Equiv_class_analyzator(file_name,sym_block_len,const)
 # eq_classes_size_n = eq_class_analyzer.get_equiv_classes_of_size_n(class_size)
 # total_num_classes = np.shape(eq_classes_size_n)[0]
 # i_class_size_40 = (19042,8460,6926,16099)
@@ -178,11 +178,11 @@ def plot_eq_class(file_name, constellation, symbol_block_length, class_size, num
 # #########################################################################
 
 #########################################################################
-file_name = "results/5-Ring_5-Ary/EqClasses_5-Ring_5-Ary_n5.npy"
+file_name = "results/5-Ring_5-Ary/EqClasses_5-Ring_5-Ary_n4.npy"
 const = const_mk.n_ring_m_ary_phase([1,2,3,4,5],5)
-sym_block_len = 5
-class_size = 5*2**4
-eq_class_analyzer = equiv_class_analyzator.Equiv_class_analyzator(file_name,sym_block_len)
+sym_block_len = 4
+class_size = 5*2**2
+eq_class_analyzer = equiv_class_analyzator.Equiv_class_analyzator(file_name,sym_block_len,const)
 eq_classes_size_n = eq_class_analyzer.get_equiv_classes_of_size_n(class_size)
 total_num_classes = np.shape(eq_classes_size_n)[0]
 rng = np.random.default_rng()
@@ -216,7 +216,7 @@ for j in rng.choice(total_num_classes, size=5):#[1000]:#
 # const = const_mk.n_ring_m_ary_phase([1,2,3,4,5],4)
 # sym_block_len = 3
 # class_size = 16
-# eq_class_analyzer = equiv_class_analyzator.Equiv_class_analyzator(file_name,sym_block_len)
+# eq_class_analyzer = equiv_class_analyzator.Equiv_class_analyzator(file_name,sym_block_len,const)
 # eq_classes_size_n = eq_class_analyzer.get_equiv_classes_of_size_n(class_size)
 # total_num_classes = np.shape(eq_classes_size_n)[0]
 # rng = np.random.default_rng()
