@@ -1,3 +1,4 @@
+import time
 import numpy as np
 import scipy.signal as sig
 import matplotlib.pyplot as plt 
@@ -18,21 +19,22 @@ photodiode_block = photodiode.Photodiode(responsivity=1, sigma2_sh=0, sigma_2_th
 int_dump_block = integrate_dump.Integrate_dump_block(sig_block)
 
 rng = np.random.default_rng(4)
-N_sym_blocks = 10
+N_sym_blocks = 10000
 
+s = time.time()
 k_vec = rng.choice(class_rep_block.representative_class_size, N_sym_blocks)
 symbols = class_rep_block.get_symbol_blocks(k_vec)
 tx_signal = sig_block.generate_signal(symbols)
 rx_signal = photodiode_block.square_law_detection(tx_signal)
 y,z = int_dump_block.integrate_dump(rx_signal)
+e = time.time()
+print(e-s)
+# plt.figure(1)
+# plt.stem(sig_block.time_vec,sig_block.tukey_window)
 
 
-plt.figure(1)
-plt.stem(sig_block.time_vec,sig_block.tukey_window)
-
-
-plt.figure(2)
-plt.stem(np.arange(len(rx_signal))*sig_block.Ts, rx_signal)
+# plt.figure(2)
+# plt.stem(np.arange(len(rx_signal))*sig_block.Ts, rx_signal)
 
 
 plt.show()
