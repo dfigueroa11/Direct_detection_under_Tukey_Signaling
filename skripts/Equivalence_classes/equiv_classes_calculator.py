@@ -8,10 +8,8 @@ class Equivalence_classes_calculator:
     symbol_block_length = None
     equivalence_classes = None
 
-    def __init__(self):
-        pass
             
-    def __init__(self,constell,constell_name,symbol_block_len=3):
+    def __init__(self,constell=None,constell_name=None,symbol_block_len=None):
         self.constellation =   constell
         self.symbol_block_length = symbol_block_len
         self.constellation_name = constell_name
