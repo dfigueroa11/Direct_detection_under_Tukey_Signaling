@@ -35,13 +35,13 @@ detector_block = detector.Detector_block(sym_time, beta, sym_block_len, class_re
 
 ########################## Simulation #####################################
 
+s = time.time()
 rng = np.random.default_rng(rng_seed)
 k_tx = rng.choice(class_rep_block.representative_class_size, N_sym_blocks)
 symbols = class_rep_block.get_symbol_blocks(k_tx)
 tx_signal = sig_block.generate_signal(symbols)
 rx_signal = photodiode_block.square_law_detection(tx_signal)
 y,z = int_dump_block.integrate_dump(rx_signal)
-s = time.time()
 k_rx = detector_block.decode(y,z,N_sym_blocks)
 e = time.time()
 print(e-s)
