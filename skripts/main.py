@@ -18,10 +18,10 @@ sym_time = 1
 sps = 11
 beta = 0.6
 responsivity = 1
-sigma2_sh=0.0001
-sigma2_th=0.0001
+sigma2_sh=0.01
+sigma2_th=0.01
 
-N_sym_blocks = 1000
+N_sym_blocks = 10_000
 
 ########################## system blocks creation #################################
 class_rep_block = class_representative.Class_representative_block(file_name,constellation,sym_block_len)
@@ -35,12 +35,12 @@ detector_block = detector.Detector_block(sym_time, beta, sym_block_len, class_re
 ########################## Simulation #####################################
 
 rng = np.random.default_rng(4)
-s = time.time()
 k_tx = rng.choice(class_rep_block.representative_class_size, N_sym_blocks)
 symbols = class_rep_block.get_symbol_blocks(k_tx)
 tx_signal = sig_block.generate_signal(symbols)
 rx_signal = photodiode_block.square_law_detection(tx_signal)
 y,z = int_dump_block.integrate_dump(rx_signal)
+s = time.time()
 k_rx = detector_block.decode(y,z,N_sym_blocks)
 e = time.time()
 print(e-s)
