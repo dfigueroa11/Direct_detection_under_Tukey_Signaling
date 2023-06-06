@@ -12,7 +12,6 @@ import detector
 
 ########################## Problem definition #####################################
 file_name = "communications_system/representative_classes/2-Ring_4-Ary_n3.npy"
-constellation = const_mk.n_ring_m_ary_phase([1,2],4)
 sym_block_len = 3
 sym_time = 1
 sps = 11
@@ -25,19 +24,21 @@ N_sym_blocks = 10_000
 rng_seed = 4
 
 ########################## system blocks creation #################################
-class_rep_block = class_representative.Class_representative_block(file_name,constellation,sym_block_len)
+class_rep_block = class_representative.Class_representative_block(file_name,sym_block_len)
 sig_block = signaling.Signaling_block(sym_time, sps, beta, adjust_beta=True)
 beta = sig_block.beta
 photodiode_block = photodiode.Photodiode(responsivity, sigma2_sh, sigma2_th, rng_seed)
 int_dump_block = integrate_dump.Integrate_dump_block(sig_block)
-detector_block = detector.Detector_block(sym_time, beta, sym_block_len, class_rep_block.representative_class,
-                                        responsivity, sigma2_sh, sigma2_th)
+detector_block = detector.Detector_block(sym_time, beta, sym_block_len, responsivity, sigma2_sh, sigma2_th)
+
 
 ########################## Simulation #####################################
-
+constellation = const_mk.n_ring_m_ary_phase([1,2],4)
+class_rep_block.set_up_const_and_rep_class(constellation)
+detector_block.set_representative_class(class_rep_block.representative_class)
 s = time.time()
 rng = np.random.default_rng(rng_seed)
-k_tx = rng.choice(class_rep_block.representative_class_size, N_sym_blocks)
+k_tx = rng.choice(len(class_rep_block.representative_class), N_sym_blocks)
 symbols = class_rep_block.get_symbol_blocks(k_tx)
 tx_signal = sig_block.generate_signal(symbols)
 rx_signal = photodiode_block.square_law_detection(tx_signal)
