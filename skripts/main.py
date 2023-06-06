@@ -18,8 +18,8 @@ sym_time = 1
 sps = 11
 beta = 0.6
 responsivity = 1
-sigma2_sh=0.01
-sigma2_th=0.01
+sigma2_sh = photodiode.get_sigma2_sh(M_APD=20, F=12.78, R_APD=10) # values from the paper
+sigma2_th = photodiode.get_sigma2_th(Tk=300, RL=15) # values from the paper
 
 N_sym_blocks = 10_000
 rng_seed = 4

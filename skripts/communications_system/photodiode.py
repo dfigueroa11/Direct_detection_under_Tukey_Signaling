@@ -1,4 +1,6 @@
 import numpy as np
+from scipy.constants import Boltzmann
+from scipy.constants import e
 
 
 class Photodiode:
@@ -21,3 +23,10 @@ class Photodiode:
         shot_noise = abs_signal * self.rng.normal(0, self.sigma_sh, size=np.shape(signal))
         thermal_noise = self.rng.normal(0, self.sigma_th, size=np.shape(signal))
         return square_law_signal + shot_noise + thermal_noise
+    
+def get_sigma2_sh(M_APD,F,R_APD):
+    return e*M_APD**2*F*R_APD
+
+
+def get_sigma2_th(Tk,RL):
+    return 2*Boltzmann*Tk/RL
