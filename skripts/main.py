@@ -22,19 +22,20 @@ sigma2_sh=0.01
 sigma2_th=0.01
 
 N_sym_blocks = 10_000
+rng_seed = 4
 
 ########################## system blocks creation #################################
 class_rep_block = class_representative.Class_representative_block(file_name,constellation,sym_block_len)
 sig_block = signaling.Signaling_block(sym_time, sps, beta, adjust_beta=True)
 beta = sig_block.beta
-photodiode_block = photodiode.Photodiode(responsivity, sigma2_sh, sigma2_th)
+photodiode_block = photodiode.Photodiode(responsivity, sigma2_sh, sigma2_th, rng_seed)
 int_dump_block = integrate_dump.Integrate_dump_block(sig_block)
 detector_block = detector.Detector_block(sym_time, beta, sym_block_len, class_rep_block.representative_class,
                                         responsivity, sigma2_sh, sigma2_th)
 
 ########################## Simulation #####################################
 
-rng = np.random.default_rng(4)
+rng = np.random.default_rng(rng_seed)
 k_tx = rng.choice(class_rep_block.representative_class_size, N_sym_blocks)
 symbols = class_rep_block.get_symbol_blocks(k_tx)
 tx_signal = sig_block.generate_signal(symbols)

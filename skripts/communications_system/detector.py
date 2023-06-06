@@ -24,28 +24,24 @@ class Detector_block:
     def decode(self,y,z,num_sym_blocks):
         k_hat = -np.ones(num_sym_blocks, dtype=int)
         for rx_sym_block in range(num_sym_blocks):
-            max_liklyhood = 0
-            for k_ML,sym_block in enumerate(self.representative_class):
-                liklyhood = self.liklyhood_y_z_given_xd(y[self.symbol_block_len*rx_sym_block:self.symbol_block_len*(rx_sym_block+1)],
-                                                        z[self.symbol_block_len*rx_sym_block:self.symbol_block_len*(rx_sym_block+1)-1],
-                                                        sym_block)
-                if liklyhood > max_liklyhood:
-                    max_liklyhood = liklyhood
-                    k_hat[rx_sym_block] = k_ML
+            liklyhood = self.liklyhood_y_z_given_xd(y[self.symbol_block_len*rx_sym_block:self.symbol_block_len*(rx_sym_block+1)],
+                                                    z[self.symbol_block_len*rx_sym_block:self.symbol_block_len*(rx_sym_block+1)-1])
+            k_hat[rx_sym_block] = np.argmax(liklyhood)
         return k_hat
 
-    def liklyhood_y_z_given_xd(self,y,z,sym_block):
-        return np.prod(self.liklyhood_yk_given_xk(y,sym_block))*np.prod(self.liklyhood_zl_given_xl_xl1(z,sym_block))
+    def liklyhood_y_z_given_xd(self,y,z):
+        return np.prod(self.liklyhood_yk_given_xk(y), axis=1)*np.prod(self.liklyhood_zl_given_xl_xl1(z), axis=1)
     
-    def liklyhood_yk_given_xk(self,y,sym_block):
-        norm_x = np.abs(sym_block)**2
-        return self.norm_dist(y, mean=self.alpha2*(1-self.beta)*self.symbol_time*norm_x,
-                              var=(1-self.beta)*self.symbol_time*(self.alpha2*norm_x*self.sigma2_sh+self.sigma2_th))
+    def liklyhood_yk_given_xk(self,y):
+        norm_x = np.square(np.abs(self.representative_class))
+        return self.norm_dist(y, means=self.alpha2*(1-self.beta)*self.symbol_time*norm_x,
+                              vars=(1-self.beta)*self.symbol_time*(self.alpha2*norm_x*self.sigma2_sh+self.sigma2_th))
     
-    def liklyhood_zl_given_xl_xl1(self,z,sym_block):
-        phi = 1/4*np.abs(sym_block[:-1]+sym_block[1:])**2 + 1/8*np.abs(sym_block[:-1]-sym_block[1:])**2
-        return self.norm_dist(z, mean=self.alpha2*self.beta*self.symbol_time*phi,
-                                var=self.beta*self.symbol_time*(self.alpha2*phi*self.sigma2_sh+self.sigma2_th))
+    def liklyhood_zl_given_xl_xl1(self,z):
+        phi = (1/4*np.square(np.abs(self.representative_class[:,:-1]+self.representative_class[:,1:]))
+               +1/8*np.square(np.abs(self.representative_class[:,:-1]-self.representative_class[:,1:])))
+        return self.norm_dist(z, means=self.alpha2*self.beta*self.symbol_time*phi,
+                                vars=self.beta*self.symbol_time*(self.alpha2*phi*self.sigma2_sh+self.sigma2_th))
     
-    def norm_dist(self, x, mean, var):
-        return 1/np.sqrt(2*np.pi*var)*np.exp(-(x-mean)**2/(2*var))
+    def norm_dist(self, x, means, vars):
+        return [1/np.sqrt(2*np.pi*var)*np.exp(-(x-mean)**2/(2*var)) for mean,var in zip(means,vars)]
