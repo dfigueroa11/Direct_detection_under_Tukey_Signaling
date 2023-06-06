@@ -18,10 +18,10 @@ sym_time = 1
 sps = 11
 beta = 0.6
 responsivity = 1
-sigma2_sh=0.000001
-sigma2_th=0.000001
+sigma2_sh=0.0001
+sigma2_th=0.0001
 
-N_sym_blocks = 10
+N_sym_blocks = 1000
 
 ########################## system blocks creation #################################
 class_rep_block = class_representative.Class_representative_block(file_name,constellation,sym_block_len)
@@ -44,8 +44,8 @@ y,z = int_dump_block.integrate_dump(rx_signal)
 k_rx = detector_block.decode(y,z,N_sym_blocks)
 e = time.time()
 print(e-s)
-print(k_rx)
-print(k_tx)
+print(np.where(k_tx != k_rx))
+
 
 # plt.figure(1)
 # plt.stem(sig_block.time_vec,sig_block.tukey_window)

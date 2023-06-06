@@ -40,12 +40,12 @@ class Detector_block:
     def liklyhood_yk_given_xk(self,y,sym_block):
         norm_x = np.abs(sym_block)**2
         return self.norm_dist(y, mean=self.alpha2*(1-self.beta)*self.symbol_time*norm_x,
-                              var=(1-self.beta)*self.symbol_time*(self.alpha2*norm_x+self.sigma2_sh+self.sigma2_th))
+                              var=(1-self.beta)*self.symbol_time*(self.alpha2*norm_x*self.sigma2_sh+self.sigma2_th))
     
     def liklyhood_zl_given_xl_xl1(self,z,sym_block):
         phi = 1/4*np.abs(sym_block[:-1]+sym_block[1:])**2 + 1/8*np.abs(sym_block[:-1]-sym_block[1:])**2
         return self.norm_dist(z, mean=self.alpha2*self.beta*self.symbol_time*phi,
-                                var=self.beta*self.symbol_time*(self.alpha2*phi+self.sigma2_sh+self.sigma2_th))
+                                var=self.beta*self.symbol_time*(self.alpha2*phi*self.sigma2_sh+self.sigma2_th))
     
     def norm_dist(self, x, mean, var):
         return 1/np.sqrt(2*np.pi*var)*np.exp(-(x-mean)**2/(2*var))
