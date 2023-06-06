@@ -8,10 +8,10 @@ class Photodiode:
     sigma_th = None
     rng = None
 
-    def __init__(self,responsivity, sigma2_sh, sigma_2_th, seed=None):
+    def __init__(self,responsivity, sigma2_sh, sigma2_th, seed=None):
         self.responsivity = responsivity
         self.sigma_sh = np.sqrt(sigma2_sh)
-        self.sigma_th = np.sqrt(sigma_2_th)
+        self.sigma_th = np.sqrt(sigma2_th)
         self.rng = np.random.default_rng(seed)
 
 
