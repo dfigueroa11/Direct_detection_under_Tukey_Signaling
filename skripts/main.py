@@ -20,8 +20,9 @@ responsivity = 1
 sigma2_sh = photodiode.get_sigma2_sh(M_APD=20, F=12.78, R_APD=10) # values from the paper
 sigma2_th = photodiode.get_sigma2_th(Tk=300, RL=15) # values from the paper
 
+
 N_sym_blocks = 10_000
-rng_seed = 4
+rng_seed = None
 
 ########################## system blocks creation #################################
 class_rep_block = class_representative.Class_representative_block(file_name,sym_block_len)
@@ -34,7 +35,7 @@ detector_block = detector.Detector_block(sym_time, beta, sym_block_len, responsi
 
 ########################## Simulation #####################################
 constellation = const_mk.n_ring_m_ary_phase([1,2],4)
-constellation = const_mk.normalize_constellation_x_dBm(constellation)
+constellation = const_mk.normalize_constellation_x_dBm(constellation,-70)
 class_rep_block.set_up_const_and_rep_class(constellation)
 detector_block.set_representative_class(class_rep_block.representative_class)
 s = time.time()
@@ -47,7 +48,7 @@ y,z = int_dump_block.integrate_dump(rx_signal)
 k_rx = detector_block.decode(y,z,N_sym_blocks)
 e = time.time()
 print(e-s)
-print(np.where(k_tx != k_rx))
+print(np.shape(np.where(k_tx != k_rx))[1]/N_sym_blocks*100)
 
 
 # plt.figure(1)
