@@ -40,16 +40,16 @@ class Detector_block:
         y = np.reshape(y,(num_sym_blocks,self.symbol_block_len))
         z = np.reshape(z,(num_sym_blocks,self.symbol_block_len))
         z = z[:,:-1]
-        return np.argmin(self.liklyhood_y_z_given_xd(y,z), axis=1)
+        return np.argmin(self.logliklyhood_y_z_given_xd(y,z), axis=1)
 
-    def liklyhood_y_z_given_xd(self,ys,zs):
-        return [np.sum(self.liklyhood_yk_given_xk(y), axis=1)+np.sum(self.liklyhood_zl_given_xl_xl1(z), axis=1) for y,z in zip(ys,zs)]
+    def logliklyhood_y_z_given_xd(self,ys,zs):
+        return [np.sum(self.logliklyhood_yk_given_xk(y), axis=1)+np.sum(self.logliklyhood_zl_given_xl_xl1(z), axis=1) for y,z in zip(ys,zs)]
     
-    def liklyhood_yk_given_xk(self,y): 
-        return self.norm_dist(y, means=self.__means_y__, vars=self.__vars_y__)
+    def logliklyhood_yk_given_xk(self,y): 
+        return self.log_norm_dist(y, means=self.__means_y__, vars=self.__vars_y__)
     
-    def liklyhood_zl_given_xl_xl1(self,z):
-        return self.norm_dist(z, means=self.__means_z__, vars=self.__vars_z__)
+    def logliklyhood_zl_given_xl_xl1(self,z):
+        return self.log_norm_dist(z, means=self.__means_z__, vars=self.__vars_z__)
     
-    def norm_dist(self, x, means, vars):
+    def log_norm_dist(self, x, means, vars):
         return [np.log(var) + (x-mean)**2/var for mean,var in zip(means,vars)]
