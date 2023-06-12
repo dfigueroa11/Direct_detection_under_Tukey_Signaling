@@ -34,6 +34,7 @@ detector_block = detector.Detector_block(sym_time, beta, sym_block_len, responsi
 
 ########################## Simulation #####################################
 constellation = const_mk.n_ring_m_ary_phase([1,2],4)
+constellation = const_mk.normalize_constellation_x_dBm(constellation)
 class_rep_block.set_up_const_and_rep_class(constellation)
 detector_block.set_representative_class(class_rep_block.representative_class)
 s = time.time()

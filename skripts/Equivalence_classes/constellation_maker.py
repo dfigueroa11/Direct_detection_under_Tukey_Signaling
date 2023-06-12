@@ -38,3 +38,8 @@ def n_QAM(M):
         constellation = [c for c in const_temp if np.imag(c)<0]
         constellation -= np.average( constellation )
     return constellation
+
+def normalize_constellation_x_dBm(constellation, dBm=0):
+    p_lin = 10**(dBm/10-3)
+    p_const = np.mean(np.abs(constellation)**2)
+    return constellation*np.sqrt(p_lin/p_const)
