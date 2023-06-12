@@ -28,11 +28,11 @@ class Detector_block:
     def set_representative_class(self,representative_class):
         self.representative_class = representative_class
         power_x = np.square(np.abs(self.representative_class))
-        self.__means_y__ = self.alpha2*(1-self.beta)*self.symbol_time*power_x
+        self.__means_y__ = self.responsivity*self.alpha2*(1-self.beta)*self.symbol_time*power_x
         self.__vars_y__ = (1-self.beta)*self.symbol_time*(self.alpha2*power_x*self.sigma2_sh+self.sigma2_th)
         phi = (1/4*np.square(np.abs(self.representative_class[:,:-1]+self.representative_class[:,1:]))
                +1/8*np.square(np.abs(self.representative_class[:,:-1]-self.representative_class[:,1:])))
-        self.__means_z__ = self.alpha2*self.beta*self.symbol_time*phi
+        self.__means_z__ = self.responsivity*self.alpha2*self.beta*self.symbol_time*phi
         self.__vars_z__ = self.beta*self.symbol_time*(self.alpha2*phi*self.sigma2_sh+self.sigma2_th)
 
 
