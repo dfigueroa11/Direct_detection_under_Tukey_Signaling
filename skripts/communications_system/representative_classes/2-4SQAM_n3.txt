@@ -1,0 +1,5 @@
+representative class done
+symbol block length = 3
+number of different symbol blocks: 64
+check numbers for rng: [979 259 826 165]
+{'bit_generator': 'PCG64', 'state': {'state': 56580672934904075439138473598231895881, 'inc': 220304433663973980970539476686364822325}, 'has_uint32': 0, 'uinteger': 0}

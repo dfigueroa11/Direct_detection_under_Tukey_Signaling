@@ -49,8 +49,15 @@ def save_representative_class(file_in, sym_block_len, file_out, constellation, s
 
 
 ##############################################################################
-file_in = "results/2-Ring_4-Ary/EqClasses_2-Ring_4-Ary_n3.npy"
+# file_in = "results/2-Ring_4-Ary/EqClasses_2-Ring_4-Ary_n3.npy"
+# sym_block_len = 3
+# constellation = const_mk.n_ring_m_ary_phase([2,np.pi],4)
+# file_out = "2-Ring_4-Ary_n3"
+# save_representative_class(file_in, sym_block_len, file_out, constellation)
+
+##############################################################################
+file_in = "results/2-4SQAM/EqClasses_2-4SQAM_n3.npy"
 sym_block_len = 3
-constellation = const_mk.n_ring_m_ary_phase([2,np.pi],4)
-file_out = "2-Ring_4-Ary_n3"
+constellation = const_mk.nr_np_SQAM([1,2],4)
+file_out = "2-4SQAM_n3"
 save_representative_class(file_in, sym_block_len, file_out, constellation)
