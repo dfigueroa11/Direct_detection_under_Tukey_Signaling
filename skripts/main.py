@@ -19,6 +19,8 @@ beta = 0.5
 responsivity = 10
 sigma2_sh = photodiode.get_sigma2_sh(M_APD=20, F=12.78, R_APD=10*5e9)#3e-6#photodiode.get_sigma2_sh(M_APD=20, F=12.78, R_APD=1) # values from the paper
 sigma2_th = photodiode.get_sigma2_th(Tk=300*5e9, RL=15)#3e-12#photodiode.get_sigma2_th(Tk=300, RL=15) # values from the paper
+print(f"shot noise power\t{sigma2_sh: .3e}")
+print(f"thermal noise power\t{sigma2_th: .3e}")
 
 N_sym_blocks = 10_000
 rng_seed = None
@@ -46,7 +48,7 @@ rx_signal = photodiode_block.square_law_detection(tx_signal)
 y,z = int_dump_block.integrate_dump(rx_signal)
 k_rx = detector_block.decode(y,z,N_sym_blocks)
 e = time.time()
-print(f"simulation time: {e-s}")
+print(f"simulation time: {e-s: .3f}")
 print(f"SER: {np.mean(k_tx != k_rx)}")
 
 
