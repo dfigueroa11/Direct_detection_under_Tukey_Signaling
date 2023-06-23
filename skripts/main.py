@@ -11,15 +11,14 @@ import integrate_dump
 import detector
 
 ########################## Problem definition #####################################
-file_name = "communications_system/representative_classes/2-Ring_4-Ary_n3.npy"
+file_name = "communications_system/representative_classes/2-4SQAM_n3.npy"
 sym_block_len = 3
 sym_time = 1
-sps = 11
-beta = 0.6
-responsivity = 1
-sigma2_sh = photodiode.get_sigma2_sh(M_APD=20, F=12.78, R_APD=10) # values from the paper
-sigma2_th = photodiode.get_sigma2_th(Tk=300, RL=15) # values from the paper
-
+sps = 21
+beta = 0.5
+responsivity = 10
+sigma2_sh = photodiode.get_sigma2_sh(M_APD=20, F=12.78, R_APD=10*5e9)#3e-6#photodiode.get_sigma2_sh(M_APD=20, F=12.78, R_APD=1) # values from the paper
+sigma2_th = photodiode.get_sigma2_th(Tk=300*5e9, RL=15)#3e-12#photodiode.get_sigma2_th(Tk=300, RL=15) # values from the paper
 
 N_sym_blocks = 10_000
 rng_seed = None
@@ -34,8 +33,8 @@ detector_block = detector.Detector_block(sym_time, beta, sym_block_len, responsi
 
 
 ########################## Simulation #####################################
-constellation = const_mk.n_ring_m_ary_phase([1,2],4)
-constellation = const_mk.normalize_constellation_x_dBm(constellation,-70)
+constellation = const_mk.nr_np_SQAM([1,1+np.sqrt(2)],4)
+constellation = const_mk.normalize_constellation_x_dBm(constellation,-17)
 class_rep_block.set_up_const_and_rep_class(constellation)
 detector_block.set_representative_class(class_rep_block.representative_class)
 s = time.time()
@@ -47,8 +46,8 @@ rx_signal = photodiode_block.square_law_detection(tx_signal)
 y,z = int_dump_block.integrate_dump(rx_signal)
 k_rx = detector_block.decode(y,z,N_sym_blocks)
 e = time.time()
-print(e-s)
-print(np.shape(np.where(k_tx != k_rx))[1]/N_sym_blocks*100)
+print(f"simulation time: {e-s}")
+print(f"SER: {np.mean(k_tx != k_rx)}")
 
 
 # plt.figure(1)
