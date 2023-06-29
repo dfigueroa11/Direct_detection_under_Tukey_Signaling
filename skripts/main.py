@@ -13,7 +13,7 @@ import detector
 ########################## Problem definition #####################################
 file_name = "communications_system/representative_classes/2-4SQAM_n3.npy"
 sym_block_len = 3
-baud_rate = 1e6
+baud_rate = 20e6
 sym_time = 1/baud_rate
 sps = 21
 fs = (sps-1)/sym_time
