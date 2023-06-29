@@ -9,12 +9,14 @@ class Photodiode:
     sigma_sh = None
     sigma_th = None
     rng = None
+    on_off = None
 
-    def __init__(self,responsivity, sigma2_sh, sigma2_th, seed=None):
+    def __init__(self,responsivity, sigma2_sh, sigma2_th, seed=None, ideal=False):
         self.responsivity = responsivity
         self.sigma_sh = np.sqrt(sigma2_sh)
         self.sigma_th = np.sqrt(sigma2_th)
         self.rng = np.random.default_rng(seed)
+        self.on_off = not ideal
 
 
     def square_law_detection(self,signal):
@@ -22,7 +24,7 @@ class Photodiode:
         square_law_signal = self.responsivity*abs_signal**2
         shot_noise = abs_signal * self.rng.normal(0, self.sigma_sh, size=np.shape(signal))
         thermal_noise = self.rng.normal(0, self.sigma_th, size=np.shape(signal))
-        return square_law_signal + shot_noise + thermal_noise
+        return square_law_signal + (shot_noise + thermal_noise)*self.on_off
     
 def get_sigma2_sh(M_APD,F,R_APD, BW_2side):
     R_D = R_APD/M_APD
