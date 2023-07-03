@@ -23,9 +23,8 @@ class Integrate_dump_block:
         num_symbols = int((len(signal)-self.window_len)/(self.sps-1)+1)
         y = np.empty(num_symbols)
         z = np.empty(num_symbols)
+        start_idx = np.arange(num_symbols+1, dtype=int)*(self.sps-1)+self.ISI_present_len
         for i in range(num_symbols):
-            start_y = i*(self.ISI_present_len+self.ISI_free_len-1)+self.ISI_present_len
-            start_z = start_y+self.ISI_free_len-1
-            y[i] = np.trapz(signal[start_y : start_y+self.ISI_free_len], dx=self.Ts)
-            z[i] = np.trapz(signal[start_z : start_z+self.ISI_present_len+1], dx=self.Ts)
+            y[i] = np.trapz(signal[start_idx[i] : start_idx[i]+self.ISI_free_len], dx=self.Ts)
+            z[i] = np.trapz(signal[start_idx[i]+self.ISI_free_len-1 : start_idx[i+1]+1], dx=self.Ts)
         return y,z
