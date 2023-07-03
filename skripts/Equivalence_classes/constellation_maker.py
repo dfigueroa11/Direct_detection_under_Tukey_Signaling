@@ -40,6 +40,6 @@ def n_QAM(M):
     return constellation
 
 def normalize_constellation_x_dBm(constellation, dBm=0):
-    p_lin = 10**(dBm/10-3)
+    p_lin_W = 10**(dBm/10-3)
     p_const = np.mean(np.abs(constellation)**2)
-    return constellation*np.sqrt(p_lin/p_const)
+    return constellation*np.sqrt(p_lin_W/p_const)
