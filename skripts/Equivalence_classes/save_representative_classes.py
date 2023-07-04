@@ -56,8 +56,15 @@ def save_representative_class(file_in, sym_block_len, file_out, constellation, s
 # save_representative_class(file_in, sym_block_len, file_out, constellation)
 
 ##############################################################################
-file_in = "results/2-4SQAM/EqClasses_2-4SQAM_n3.npy"
-sym_block_len = 3
+# file_in = "results/2-4SQAM/EqClasses_2-4SQAM_n3.npy"
+# sym_block_len = 3
+# constellation = const_mk.nr_np_SQAM([1,2],4)
+# file_out = "2-4SQAM_n3"
+# save_representative_class(file_in, sym_block_len, file_out, constellation)
+
+##############################################################################
+file_in = "results/2-4SQAM/EqClasses_2-4SQAM_n4.npy"
+sym_block_len = 4
 constellation = const_mk.nr_np_SQAM([1,2],4)
-file_out = "2-4SQAM_n3"
+file_out = "2-4SQAM_n4"
 save_representative_class(file_in, sym_block_len, file_out, constellation)
