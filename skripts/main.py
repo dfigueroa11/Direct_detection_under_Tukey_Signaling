@@ -10,12 +10,12 @@ import integrate_dump
 import detector
 from channel_metrics import get_BER, get_MI, get_SER
 
-betas = np.array([0.3,0.5,0.6,0.7,0.9])
+betas = np.array([0.1,0.5,0.7,0.9])
 start = time.time()
 for beta in betas:
     ########################## Problem definition #####################################
-    file_name = "communications_system/representative_classes/2-4SQAM_n4.npy"
-    sym_block_len = 4
+    file_name = "communications_system/representative_classes/2-4SQAM_n3_all.npy"
+    sym_block_len = 3
     baud_rate = 10e9
     sym_time = 1/baud_rate
     sps = 21
@@ -24,9 +24,9 @@ for beta in betas:
     sigma2_sh = photodiode.get_sigma2_sh(M_APD=20, F=12.78, R_apd=10, BW_2side=fs)
     sigma2_th = photodiode.get_sigma2_th(Tk=300, RL=15, BW_2side=fs)
     ideal = False
-    optical_power_range = np.arange(-17,-6)
+    optical_power_range = np.arange(-33,-4)
 
-    N_sym_blocks = 200_000
+    N_sym_blocks = 100000#200_000
     rng_seed = 55
 
     ########################## system blocks creation #################################
@@ -39,9 +39,9 @@ for beta in betas:
 
     ########################## Simulation #####################################
 
-    ser = np.empty_like(optical_power_range, dtype=float)
-    ber = np.empty_like(optical_power_range, dtype=float)
-
+    # ser = np.empty_like(optical_power_range, dtype=float)
+    # ber = np.empty_like(optical_power_range, dtype=float)
+    mi = np.empty_like(optical_power_range, dtype=float)
     for i,op_pow in enumerate(optical_power_range):
         constellation = const_mk.nr_np_SQAM([1,1+np.sqrt(2)],4)
         constellation = const_mk.normalize_constellation_x_dBm(constellation,op_pow)
@@ -56,22 +56,26 @@ for beta in betas:
         y,z = int_dump_block.integrate_dump(rx_signal)
         k_rx = detector_block.decode_logliklyhood(y,z,N_sym_blocks)
         e = time.time()
-        ser[i] = get_SER(k_tx, k_rx)
-        ber[i] = get_BER(k_tx, k_rx, len(class_rep_block.representative_class))
+        # ser[i] = get_SER(k_tx, k_rx)
+        # ber[i] = get_BER(k_tx, k_rx, len(class_rep_block.representative_class))
+        mi[i] = get_MI(k_tx, k_rx, len(class_rep_block.representative_class), 3)
         print(f"\tsimulation for ROP = {op_pow} dBm done successfully")
         print(f"\tsimulation time: {e-s: .3f} seconds")
     
 
     print(f"simulation for beta = {beta} done successfully")
-    with open(f'hole_system_sim_results/2-4SQAM_n4_M256_b{beta*100: .0f}_SER.npy', 'wb') as f:
-        np.save(f, ser)
+    # with open(f'hole_system_sim_results/2-4SQAM_n4_M256_b{beta*100: .0f}_SER.npy', 'wb') as f:
+    #     np.save(f, ser)
 
-    with open(f'hole_system_sim_results/2-4SQAM_n4_M256_b{beta*100: .0f}_BER.npy', 'wb') as f:
-        np.save(f, ber)
+    # with open(f'hole_system_sim_results/2-4SQAM_n4_M256_b{beta*100: .0f}_BER.npy', 'wb') as f:
+    #     np.save(f, ber)
+
+    with open(f'whole_system_sim_results/2-4SQAM_n3_M72_b{beta*100: .0f}_MI.npy', 'wb') as f:
+        np.save(f, mi)
     
 
 end = time.time()
-with open(f"hole_system_sim_results/2-4SQAM_n4_M256_b{beta*100: .0f}_resume.txt", 'w') as f:
+with open(f"whole_system_sim_results/2-4SQAM_n3_M72_resume.txt", 'w') as f:
     f.write(f"number of symbol blocks simulated: {N_sym_blocks}\n")
     f.write(f"simulation time: {end-start: .0f} seconds\n")
     f.write(f"simulated betas: {np.array2string(betas)}\n")
