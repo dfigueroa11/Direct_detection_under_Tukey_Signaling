@@ -23,6 +23,8 @@ rop_range_dBm = np.arange(-33,-4)
 N_sym_blocks = 100_000
 rng_seed = 55
 
+output_file_name = "whole_system_sim_results/2-4SQAM_n3_all.p"
+
 ##################################### Simulation ######################################
 ser = np.empty((len(betas),len(rop_range_dBm)))
 ber = np.empty((len(betas),len(rop_range_dBm)))
@@ -40,7 +42,7 @@ for i,beta in enumerate(betas):
         print(f"\tsimulation for ROP = {rop_dBm} dBm done successfully")
         print(f"\tsimulation time: {sub_end_time-sub_start_time: .3f} seconds")
         ################ save partial results in case simulation stops ###################
-        tukey_sig_system.save_results("whole_system_sim_results/2-4SQAM_n3_all.p",
+        tukey_sig_system.save_results(output_file_name,
                                       N_sym_blocks=N_sym_blocks,
                                       betas=betas,
                                       rop_range_dBm=rop_range_dBm,
@@ -57,7 +59,7 @@ for i,beta in enumerate(betas):
 end_time = time.time()
 
 ################################## Saving results ###################################
-tukey_sig_system.save_results("whole_system_sim_results/2-4SQAM_n3_all.p",
+tukey_sig_system.save_results(output_file_name,
                               N_sym_blocks=N_sym_blocks,
                               betas=betas,
                               rop_range_dBm=rop_range_dBm,
