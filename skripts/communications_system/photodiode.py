@@ -26,10 +26,10 @@ class Photodiode:
         thermal_noise = self.rng.normal(0, self.sigma_th, size=np.shape(signal))
         return square_law_signal + (shot_noise + thermal_noise)*self.on_off
     
-def get_sigma2_sh(M_APD,F,R_apd, BW_2side):
+def get_N0_sh(M_APD,F,R_apd):
     R_d = R_apd/M_APD
-    return e*M_APD**2*F*R_d*BW_2side
+    return e*M_APD**2*F*R_d
 
 
-def get_sigma2_th(Tk,RL,BW_2side):
-    return 2*Boltzmann*Tk*BW_2side/RL
+def get_N0_th(Tk,RL):
+    return 2*Boltzmann*Tk/RL
