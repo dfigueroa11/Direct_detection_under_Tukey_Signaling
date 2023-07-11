@@ -20,7 +20,7 @@ tukey_sig_system = Tukey_signaling(file_name="communications_system/representati
 
 betas = np.array([0.1,0.5,0.7,0.9])
 rop_range_dBm = np.arange(-33,-4)
-N_sym_blocks = 1000
+N_sym_blocks = 100_000
 rng_seed = 55
 
 ##################################### Simulation ######################################
@@ -44,6 +44,7 @@ for i,beta in enumerate(betas):
                                       N_sym_blocks=N_sym_blocks,
                                       betas=betas,
                                       rop_range_dBm=rop_range_dBm,
+                                      rep_class_size=len(tukey_sig_system.class_rep_block.representative_class),
                                       ser=ser,
                                       ber=ber,
                                       mi=mi,
@@ -60,6 +61,7 @@ tukey_sig_system.save_results("whole_system_sim_results/2-4SQAM_n3_all.p",
                               N_sym_blocks=N_sym_blocks,
                               betas=betas,
                               rop_range_dBm=rop_range_dBm,
+                              rep_class_size=len(tukey_sig_system.class_rep_block.representative_class),
                               ser=ser,
                               ber=ber,
                               mi=mi,
