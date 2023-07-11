@@ -38,40 +38,40 @@ class Detector_block:
         self.__vars_z__ = (self.beta*self.symbol_time)*self.Ts*(self.alpha2*phi*self.sigma2_sh+self.sigma2_th)
 
 
-    def decode_logliklyhood(self,y,z,num_sym_blocks):
+    def decode_loglikelihood(self,y,z,num_sym_blocks):
         y = np.reshape(y,(num_sym_blocks,self.symbol_block_len))
         z = np.reshape(z,(num_sym_blocks,self.symbol_block_len))
         z = z[:,:-1]
-        xd = self.logliklyhood_y_z_given_xd(y,z)
+        xd = self.loglikelihood_y_z_given_xd(y,z)
         return np.argmin(xd, axis=1)
 
-    def logliklyhood_y_z_given_xd(self,ys,zs):
-        return [np.sum(self.logliklyhood_yk_given_xk(y), axis=1)+np.sum(self.logliklyhood_zl_given_xl_xl1(z), axis=1) for y,z in zip(ys,zs)]
+    def loglikelihood_y_z_given_xd(self,ys,zs):
+        return [np.sum(self.loglikelihood_yk_given_xk(y), axis=1)+np.sum(self.loglikelihood_zl_given_xl_xl1(z), axis=1) for y,z in zip(ys,zs)]
     
-    def logliklyhood_yk_given_xk(self,y): 
+    def loglikelihood_yk_given_xk(self,y): 
         return self.log_norm_dist(y, means=self.__means_y__, vars=self.__vars_y__)
     
-    def logliklyhood_zl_given_xl_xl1(self,z):
+    def loglikelihood_zl_given_xl_xl1(self,z):
         return self.log_norm_dist(z, means=self.__means_z__, vars=self.__vars_z__)
     
     def log_norm_dist(self, x, means, vars):
         return [np.log(var) + (x-mean)**2/var for mean,var in zip(means,vars)]
     
-    def decode_liklyhood(self,y,z,num_sym_blocks):
+    def decode_likelihood(self,y,z,num_sym_blocks):
         y = np.reshape(y,(num_sym_blocks,self.symbol_block_len))
         z = np.reshape(z,(num_sym_blocks,self.symbol_block_len))
         z = z[:,:-1]
-        xd = self.liklyhood_y_z_given_xd(y,z)
+        xd = self.likelihood_y_z_given_xd(y,z)
         #print(xd)
         return np.argmax(xd, axis=1)
 
-    def liklyhood_y_z_given_xd(self,ys,zs):
-        return [np.prod(self.liklyhood_yk_given_xk(y), axis=1)*np.prod(self.liklyhood_zl_given_xl_xl1(z), axis=1) for y,z in zip(ys,zs)]
+    def likelihood_y_z_given_xd(self,ys,zs):
+        return [np.prod(self.likelihood_yk_given_xk(y), axis=1)*np.prod(self.likelihood_zl_given_xl_xl1(z), axis=1) for y,z in zip(ys,zs)]
     
-    def liklyhood_yk_given_xk(self,y): 
+    def likelihood_yk_given_xk(self,y): 
         return self.norm_dist(y, means=self.__means_y__, vars=self.__vars_y__)
     
-    def liklyhood_zl_given_xl_xl1(self,z):
+    def likelihood_zl_given_xl_xl1(self,z):
         return self.norm_dist(z, means=self.__means_z__, vars=self.__vars_z__)
     
     def norm_dist(self, x, means, vars):

@@ -66,7 +66,7 @@ class Tukey_signaling:
         tx_signal = self.sig_block.generate_signal(symbols)
         rx_signal = self.photodiode_block.square_law_detection(tx_signal)
         y,z = self.int_dump_block.integrate_dump(rx_signal)
-        k_rx = self.detector_block.decode_logliklyhood(y,z,N_sym_blocks)
+        k_rx = self.detector_block.decode_loglikelihood(y,z,N_sym_blocks)
         ser = get_SER(k_tx, k_rx)
         ber = get_BER(k_tx, k_rx, len_rep_class)
         mi = get_MI(k_tx, k_rx, len_rep_class, self.sym_block_len)
