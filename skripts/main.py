@@ -19,8 +19,8 @@ tukey_sig_system = Tukey_signaling(file_name="communications_system/representati
 
 
 betas = np.array([0.1,0.5,0.7,0.9])
-rop_range_dBm = np.arange(-13,-4)
-N_sym_blocks = 100
+rop_range_dBm = np.arange(-33,-4)
+N_sym_blocks = 1000
 rng_seed = 55
 
 ##################################### Simulation ######################################
@@ -39,6 +39,19 @@ for i,beta in enumerate(betas):
         sub_end_time = time.time()
         print(f"\tsimulation for ROP = {rop_dBm} dBm done successfully")
         print(f"\tsimulation time: {sub_end_time-sub_start_time: .3f} seconds")
+        ################ save partial results in case simulation stops ###################
+        tukey_sig_system.save_results("whole_system_sim_results/2-4SQAM_n3_all.p",
+                                      N_sym_blocks=N_sym_blocks,
+                                      betas=betas,
+                                      rop_range_dBm=rop_range_dBm,
+                                      ser=ser,
+                                      ber=ber,
+                                      mi=mi,
+                                      rng_seed=rng_seed,
+                                      sim_ended=False,
+                                      current_beta=beta,
+                                      current_rop_dBm=rop_dBm)
+
     print(f"simulation for beta = {beta} done successfully")
 end_time = time.time()
 
@@ -51,4 +64,5 @@ tukey_sig_system.save_results("whole_system_sim_results/2-4SQAM_n3_all.p",
                               ber=ber,
                               mi=mi,
                               sim_time=end_time-start_time,
-                              rng_seed=rng_seed)
+                              rng_seed=rng_seed,
+                              sim_ended=True)
